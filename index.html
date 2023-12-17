@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Seat Finder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Wedding Seat Finder</h1>
+    <form id="seatFinderForm">
+        <label for="name">Enter Your Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="button" onclick="findSeat()">Find My Seat</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        // Embed the JSON data directly into the HTML file
+        var seatingData = [
+            {
+                "name": "darshini",
+                "tableNumber": 1
+            },
+            {
+                "name": "roshini",
+                "tableNumber": 2
+            },
+            {
+                "name": "kamini",
+                "tableNumber": 3
+            },
+            {
+                "name": "darshana",
+                "tableNumber": 4
+            }
+            // Add more names and corresponding tables as needed
+        ];
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
