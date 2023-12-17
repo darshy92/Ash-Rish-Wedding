@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Seat Finder</title>
+    <title>Rish & Ash's Reception Seat Locator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Wedding Seat Finder</h1>
-    <form id="seatFinderForm">
-        <label for="name">Enter Your Name:</label>
-        <input type="text" id="name" name="name" required>
-        <button type="button" onclick="findSeat()">Find My Seat</button>
-    </form>
-    <div id="result"></div>
+    <div class="container">
+        <h1>Rish & Ash's Reception</h1>
+        <h2>Seat Locator</h2>
+        <form id="seatFinderForm">
+            <label for="name">Enter Your Name:</label>
+            <input type="text" id="name" name="name" required>
+            <button type="button" onclick="findSeat()">Find My Seat</button>
+        </form>
+        <div id="result"></div>
+        <p class="instructions">Enter either the full name or the first few characters to find your seat.</p>
+    </div>
 
     <script>
         // Embed the JSON data directly into the HTML file
