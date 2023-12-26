@@ -1,4 +1,38 @@
-[
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rish & Ash's Reception Seat Locator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .floorplan {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rish & Ash's Reception</h1>
+        <h2>Seat Locator</h2>
+        <form id="seatFinderForm">
+            <label for="name">Enter Your Name:</label>
+            <input type="text" id="name" name="name" required>
+            <button type="button" onclick="findSeat()">Find My Seat</button>
+        </form>
+        <div id="result"></div>
+        <p class="instructions">Enter either the full name or the first few characters to find your seat.</p>
+        <p id="registrationMessage"></p>
+
+        <!-- Include the floorplan image -->
+        <img src="Floor Plan - 40x tbls_page-0001.jpg" alt="Floorplan" class="floorplan">
+
+    </div>
+
+    <script>
+        // Embed the JSON data directly into the HTML file
+        var seatingData = [
   {
     "Name": "Risham Shroff",
     "Table number": 1
@@ -1491,4 +1525,58 @@
     "Name": "VENDORS x10",
     "Table number": 40
   }
-]
+];
+
+        // Add event listener for keydown event on the input field
+        document.getElementById("name").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                findSeat();
+            }
+        });
+
+        function findSeat() {
+            var inputName = document.getElementById("name").value.trim().toLowerCase();
+            var matchingSeats = [];
+
+            // Search for matching seats
+            for (var i = 0; i < seatingData.length; i++) {
+                var fullNameLower = seatingData[i].Name.toLowerCase();
+                if (fullNameLower.includes(inputName)) {
+                    matchingSeats.push(seatingData[i]);
+                }
+            }
+
+            // Display the result
+            displayResult(matchingSeats);
+        }
+
+        function displayResult(matchingSeats) {
+            var resultContainer = document.getElementById("result");
+            var registrationMessage = document.getElementById("registrationMessage");
+            resultContainer.innerHTML = "";
+            registrationMessage.innerHTML = "";
+
+            if (matchingSeats.length > 0) {
+                var resultHTML = "";
+
+                if (matchingSeats.length === 1) {
+                    resultHTML = "<p>Your Seat:</p>";
+                } else {
+                    resultHTML = "<p>Matching Seats:</p>";
+                    registrationMessage.innerHTML = "<p>If you are unsure, please head to the registration table for assistance.</p>";
+                }
+
+                resultHTML += "<ul>";
+                for (var i = 0; i < matchingSeats.length; i++) {
+                    resultHTML += "<li>Name: " + matchingSeats[i].Name + ", Table: " + matchingSeats[i]["Table number"] + "</li>";
+                }
+                resultHTML += "</ul>";
+                resultContainer.innerHTML = resultHTML;
+            } else {
+                resultContainer.innerHTML = "<p>Seat not found. Please check the name and try again.</p>";
+                registrationMessage.innerHTML = "<p>If you are unable to find your seat, please head to the registration table for assistance.</p>";
+            }
+        }
+    </script>
+</body>
+</html>
