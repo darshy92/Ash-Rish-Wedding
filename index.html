@@ -6,9 +6,71 @@
     <title>Rish & Ash's Reception Seat Locator</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            background-image: url('for site.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        #seatFinderForm {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #name {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            color: darkgreen;
+        }
+
+        .instructions {
+            margin-top: 20px;
+        }
+
+        #registrationMessage {
+            margin-top: 20px;
+        }
+
         .floorplan {
             max-width: 100%;
             height: auto;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -18,7 +80,7 @@
         <h2>Seat Locator</h2>
         <form id="seatFinderForm">
             <label for="name">Enter Your Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" placeholder="Type name here" required>
             <button type="button" onclick="findSeat()">Find My Seat</button>
         </form>
         <div id="result"></div>
