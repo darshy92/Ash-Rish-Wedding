@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rish & Ash's Reception Seat Locator</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             background-image: url('Nashville Wedding Venues.jpeg');
@@ -89,7 +88,6 @@
 
         <!-- Include the floorplan image -->
         <img src="Floor Plan - 40x tbls_page-0001.jpg" alt="Floorplan" class="floorplan">
-
     </div>
 
     <script>
@@ -1637,54 +1635,26 @@
   }
 ];
 
-        // Add event listener for keydown event on the input field
-        document.getElementById("name").addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                findSeat();
-            }
-        });
-
         function findSeat() {
-            var inputName = document.getElementById("name").value.trim().toLowerCase();
-            var matchingSeats = [];
+            var nameInput = document.getElementById('name').value.trim();
+            var resultContainer = document.getElementById('result');
+            var foundSeat = false;
 
-            // Search for matching seats
-            for (var i = 0; i < seatingData.length; i++) {
-                var fullNameLower = seatingData[i].Name.toLowerCase();
-                if (fullNameLower.includes(inputName)) {
-                    matchingSeats.push(seatingData[i]);
-                }
-            }
-
-            // Display the result
-            displayResult(matchingSeats);
-        }
-
-        function displayResult(matchingSeats) {
-            var resultContainer = document.getElementById("result");
-            var registrationMessage = document.getElementById("registrationMessage");
-            resultContainer.innerHTML = "";
-            registrationMessage.innerHTML = "";
-
-            if (matchingSeats.length > 0) {
-                var resultHTML = "";
-
-                if (matchingSeats.length === 1) {
-                    resultHTML = "<p>Your Seat:</p>";
-                } else {
-                    resultHTML = "<p>Matching Seats:</p>";
-                    registrationMessage.innerHTML = "<p>If you are unsure, please head to the registration table for assistance.</p>";
+            if (nameInput !== '') {
+                for (var i = 0; i < seatingData.length; i++) {
+                    var fullName = seatingData[i].Name.toLowerCase();
+                    if (fullName.includes(nameInput.toLowerCase())) {
+                        resultContainer.textContent = 'Your seat is at Table Number ' + seatingData[i]['Table Number'];
+                        foundSeat = true;
+                        break;
+                    }
                 }
 
-                resultHTML += "<ul>";
-                for (var i = 0; i < matchingSeats.length; i++) {
-                    resultHTML += "<li>Name: " + matchingSeats[i].Name + ", Table: " + matchingSeats[i]["Table number"] + "</li>";
+                if (!foundSeat) {
+                    resultContainer.textContent = 'Sorry, no matching seat found for ' + nameInput;
                 }
-                resultHTML += "</ul>";
-                resultContainer.innerHTML = resultHTML;
             } else {
-                resultContainer.innerHTML = "<p>Seat not found. Please check the name and try again.</p>";
-                registrationMessage.innerHTML = "<p>If you are unable to find your seat, please head to the registration table for assistance.</p>";
+                resultContainer.textContent = 'Please enter a name to find the seat.';
             }
         }
     </script>
