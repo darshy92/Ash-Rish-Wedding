@@ -1645,28 +1645,38 @@
   }
 ];
 
-        function findSeat() {
-            var nameInput = document.getElementById('name').value.trim();
-            var resultContainer = document.getElementById('result');
-            var foundSeat = false;
+         function findSeat() {
+        var nameInput = document.getElementById('name').value.trim();
+        var resultContainer = document.getElementById('result');
+        var foundSeats = [];
 
-            if (nameInput !== '') {
-                for (var i = 0; i < seatingData.length; i++) {
-                    var fullName = seatingData[i].Name.toLowerCase();
-                    if (fullName.includes(nameInput.toLowerCase())) {
-                        resultContainer.textContent = 'Your seat is at Table Number ' + seatingData[i]['Table Number'];
-                        foundSeat = true;
-                        break;
+        if (nameInput !== '') {
+            for (var i = 0; i < seatingData.length; i++) {
+                var fullName = seatingData[i].Name.toLowerCase();
+                var seatNumber = seatingData[i]['Table Number'];
+
+                // Check if the characters in the nameInput appear in order
+                var inputIndex = 0;
+                for (var charIndex = 0; charIndex < fullName.length; charIndex++) {
+                    if (fullName[charIndex] === nameInput[inputIndex]) {
+                        inputIndex++;
+
+                        // If all characters are found in order, add the seat to foundSeats
+                        if (inputIndex === nameInput.length) {
+                            foundSeats.push(seatNumber);
+                            break;
+                        }
                     }
                 }
-
-                if (!foundSeat) {
-                    resultContainer.textContent = 'Sorry, no matching seat found for ' + nameInput;
-                }
-            } else {
-                resultContainer.textContent = 'Please enter a name to find the seat.';
             }
+
+            if (foundSeats.length > 0) {
+                resultContainer.textContent = 'Possible seats for ' + nameInput + ': ' + foundSeats.join(', ');
+            } else {
+                resultContainer.textContent = 'Sorry, no matching seat found for ' + nameInput;
+            }
+        } else {
+            resultContainer.textContent = 'Please enter a name to find the seat.';
         }
-    </script>
-</body>
-</html>
+    }
+</script>
