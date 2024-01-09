@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +29,8 @@
             max-width: 80%;
         }
 
-        h1, h2 {
+        h1,
+        h2 {
             margin: 0;
         }
 
@@ -50,17 +52,17 @@
 
         button {
             width: 100%;
-            padding: 15px; /* Increased padding for a larger button */
-            font-size: 18px; /* Increased font size for better visibility */
+            padding: 15px;
+            font-size: 18px;
             cursor: pointer;
-            background-color: #4CAF50; /* Green background color */
-            color: #fff; /* White text color */
-            border: none; /* Remove border */
-            border-radius: 5px; /* Add a subtle border radius */
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
         }
 
         button:hover {
-            background-color: #45a049; /* Darker green on hover */
+            background-color: #45a049;
         }
 
         #result {
@@ -83,6 +85,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Rish & Ash's Reception</h1>
@@ -100,10 +103,9 @@
         <img src="Floor Plan - 40x tbls_page-0001.jpg" alt="Floorplan" class="floorplan">
     </div>
 
-  <script>
-    // Embed the JSON data directly into the HTML file
-    var seatingData = Find what you need faster … Home is your new landing page and surfaces your most relevant files and folders
-Find what you need faster … Home is your new landing page and surfaces your most relevant files and folders
+    <script>
+        // Embed the JSON data directly into the HTML file
+        var seatingData = Find what you need faster … Home is your new landing page and surfaces your most relevant files and folders
 [
   {
     "Name": "Risham Shroff",
@@ -1647,57 +1649,30 @@ Find what you need faster … Home is your new landing page and surfaces your mo
   }
 ];
 
-    // Add event listener for keydown event on the input field
-    document.getElementById("name").addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            findSeat();
-        }
-    });
+        function findSeat() {
+            var nameInput = document.getElementById('name').value.trim();
+            var resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = ''; // Clear previous results
 
-    function findSeat() {
-        var inputName = document.getElementById("name").value.trim().toLowerCase();
-        var matchingSeats = [];
-
-        // Search for matching seats
-        for (var i = 0; i < seatingData.length; i++) {
-            var fullNameLower = seatingData[i].Name.toLowerCase();
-            if (fullNameLower.includes(inputName)) {
-                matchingSeats.push(seatingData[i]);
-            }
-        }
-
-        // Display the result
-        displayResult(matchingSeats);
-    }
-
-    function displayResult(matchingSeats) {
-        var resultContainer = document.getElementById("result");
-        var registrationMessage = document.getElementById("registrationMessage");
-        resultContainer.innerHTML = "";
-        registrationMessage.innerHTML = "";
-
-        if (matchingSeats.length > 0) {
-            var resultHTML = "";
-
-            if (matchingSeats.length === 1) {
-                resultHTML = "<p>Your Seat:</p>";
-            } else {
-                resultHTML = "<p>Matching Seats:</p>";
-                registrationMessage.innerHTML = "<p>If you are unsure, please head to the registration table for assistance.</p>";
+            if (nameInput === '') {
+                resultContainer.innerText = 'Please enter a name.';
+                return;
             }
 
-            resultHTML += "<ul>";
-            for (var i = 0; i < matchingSeats.length; i++) {
-                // Correct the property name to "Table Number"
-                resultHTML += "<li>Name: " + matchingSeats[i].Name + ", Table: " + matchingSeats[i]["Table Number"] + "</li>";
+            var found = false;
+
+            seatingData.forEach(function (guest) {
+                if (guest.Name.toLowerCase().includes(nameInput.toLowerCase())) {
+                    resultContainer.innerText = 'Seat Found! You are at Table ' + guest['Table Number'] + '.';
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                resultContainer.innerText = 'Sorry, no matching seat found for ' + nameInput + '.';
             }
-            resultHTML += "</ul>";
-            resultContainer.innerHTML = resultHTML;
-        } else {
-            resultContainer.innerHTML = "<p>Seat not found. Please check the name and try again.</p>";
-            registrationMessage.innerHTML = "<p>If you are unable to find your seat, please head to the registration table for assistance.</p>";
         }
-    }
-</script>
+    </script>
 </body>
+
 </html>
