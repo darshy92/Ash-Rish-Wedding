@@ -1649,38 +1649,57 @@
   }
 ];
 
-       function findSeat() {
-        var nameInput = document.getElementById('name').value.trim();
-        var resultContainer = document.getElementById('result');
-        var foundSeats = [];
+     // Add event listener for keydown event on the input field
+    document.getElementById("name").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            findSeat();
+        }
+    });
 
-        if (nameInput !== '') {
-            for (var i = 0; i < seatingData.length; i++) {
-                var fullName = seatingData[i].Name.toLowerCase();
-                var seatNumber = seatingData[i]['Table Number'];
+    function findSeat() {
+        var inputName = document.getElementById("name").value.trim().toLowerCase();
+        var matchingSeats = [];
 
-                // Check if the characters in the nameInput appear in order
-                var inputIndex = 0;
-                for (var charIndex = 0; charIndex < fullName.length; charIndex++) {
-                    if (fullName[charIndex] === nameInput[inputIndex]) {
-                        inputIndex++;
-
-                        // If all characters are found in order, add the seat to foundSeats
-                        if (inputIndex === nameInput.length) {
-                            foundSeats.push(seatNumber);
-                            break;
-                        }
-                    }
-                }
+        // Search for matching seats
+        for (var i = 0; i < seatingData.length; i++) {
+            var fullNameLower = seatingData[i].Name.toLowerCase();
+            if (fullNameLower.includes(inputName)) {
+                matchingSeats.push(seatingData[i]);
             }
+        }
 
-            if (foundSeats.length > 0) {
-                resultContainer.textContent = 'Possible seats for ' + nameInput + ': ' + foundSeats.join(', ');
+        // Display the result
+        displayResult(matchingSeats);
+    }
+
+    function displayResult(matchingSeats) {
+        var resultContainer = document.getElementById("result");
+        var registrationMessage = document.getElementById("registrationMessage");
+        resultContainer.innerHTML = "";
+        registrationMessage.innerHTML = "";
+
+        if (matchingSeats.length > 0) {
+            var resultHTML = "";
+
+            if (matchingSeats.length === 1) {
+                resultHTML = "<p>Your Seat:</p>";
             } else {
-                resultContainer.textContent = 'Sorry, no matching seat found for ' + nameInput;
+                resultHTML = "<p>Matching Seats:</p>";
+                registrationMessage.innerHTML = "<p>If you are unsure, please head to the registration table for assistance.</p>";
             }
+
+            resultHTML += "<ul>";
+            for (var i = 0; i < matchingSeats.length; i++) {
+                // Correct the property name to "Table Number"
+                resultHTML += "<li>Name: " + matchingSeats[i].Name + ", Table: " + matchingSeats[i]["Table Number"] + "</li>";
+            }
+            resultHTML += "</ul>";
+            resultContainer.innerHTML = resultHTML;
         } else {
-            resultContainer.textContent = 'Please enter a name to find the seat.';
+            resultContainer.innerHTML = "<p>Seat not found. Please check the name and try again.</p>";
+            registrationMessage.innerHTML = "<p>If you are unable to find your seat, please head to the registration table for assistance.</p>";
         }
     }
 </script>
+</body>
+</html>
